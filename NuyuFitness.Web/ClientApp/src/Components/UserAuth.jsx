@@ -1,7 +1,8 @@
 ﻿import React, { createContext, useContext, useEffect, useState } from 'react';
 import getAxios from './AuthAxios';
+import { CircularProgress, Box } from '@mui/material';
 
-const AuthContext = createContext();
+const AuthContext = React.createContext();
 
 const AuthContextComponent = ({ children }) => {
 
@@ -10,27 +11,25 @@ const AuthContextComponent = ({ children }) => {
 
     useEffect(() => {
         const getUser = async () => {
-            try {
-                const { data } = await getAxios().get('/api/account/getcurrentuser');
-                setUser(data);
-            }
-            catch {
-            }
+            const { data } = await getAxios().get('/api/account/getcurrentuser');
+            setUser(data);
             setIsLoading(false);
         }
-
         getUser();
     }, []);
 
 
     if (isLoading) {
-        return <h1>Loading...</h1>
+        return <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+            <CircularProgress color="success" />
+        </Box>
     }
 
-    return <AuthContext.Provider value={{ user, setUser }}>
-        {children}
-    </AuthContext.Provider>
-
+    return (
+        <AuthContext.Provider value={{ user, setUser }}>
+            {children}
+        </AuthContext.Provider>
+    )
 }
 
 const useAuth = () => useContext(AuthContext);

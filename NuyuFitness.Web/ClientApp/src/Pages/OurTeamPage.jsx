@@ -10,37 +10,37 @@ import Maryam from '../assets/Maryam.jpeg';
 
 const teamMembers = [
     {
-        photo: { Tom },
+        photo: Tom,
         firstName: 'Tom',
         title: 'Founder/Coach',
         description: 'Tom is an accomplished individual with a passion for helping others improve their health.  With a background as a Marine, firefighter, and EMT, as well as multiple certifications in health coaching and personal training, Tom brings a unique blend of skills and experiences to his clients. His background and ongoing education make him a valuable resource for clients. He is dedicated to helping people unlock their inner power and achieve their health and fitness goals.',
     },
     {
-        photo: { Elana },
+        photo: Elana,
         firstName: 'Elana',
         title: 'Operations Director/Coach',
         description: 'Elana brings a wealth of experience and positive energy to our team. With her professional background and current studies in software development, she is able to wear many hats while keeping things running smoothly on a day-to-day basis and keep us on course for the long haul. As a certified wellness coach, she is passionate about helping others achieve their health and wellness goals.',
     },
     {
-        photo: { Kayli },
+        photo: Kayli,
         firstName: 'Kayli',
         title: 'Front Desk/Coach',
         description: 'Kayli brings a smile and positive energy to the front desk. She currently earned her Personal Trainer certification and is eager to further her journey in the health and wellness industry. Her warm personality, commitment to excellence, and eagerness to learn, make Kayli a valuable asset to the nuYu Fitness team.',
     },
     {
-        photo: { Vin },
+        photo: Vin,
         firstName: 'Vin',
         title: 'Coach',
         description: 'My passion for fitness started as just a hobby back when I was only 16 but turned into a passion. Today I hold a B.S. in Kinesiology from Penn State University with a background in physical therapy. I am a Certified Personal Trainer and Certified Nutrition Coach through National Academy of Sports Medicine. I have competed in one show (Summer Shredding Classic) and took 1st place for my class. Fitness is my passion! Being able to do this as a profession is a dream come true.I love helping people create a sustainable lifestyle as well as fitness goals such as losing weight, building muscle, increase mobility, and overall confidence.Nothing makes me happier than seeing you succeed.I am friendly and personable and would love to get to know each and everyone of you!',
     },
     {
-        photo: { Don },
+        photo: Don,
         firstName: 'Don',
         title: 'Coach',
         description: 'Don has been in the fitness industry as a trainer and group exercise instructor since 2012. He has worked at multiple gyms and studios, and enjoys learning new techniques, movements, and relevant information.Don uses functional movements and exercises as a way to build up fitness for real life, and he is passionate about helping others achieve a healthy lifestyle. Don enjoys obstacle course racing, gardening, and cooking, and loves coming up with creative workouts to challenge clients in different ways.',
     },
     {
-        photo: { Maryam },
+        photo: Maryam,
         firstName: 'Maryam',
         title: 'Operations Director/Coach',
         description: 'Hi! I am passionate about helping people reach their fitness goals and believe everyone deserves to feel happy and confident in their own body.I create custom fitness plans that are realistic and effective, and work with my clients to instill values of consistency and self- belief.With my support, guidance, and encouragement, I am confident we can help you become the best version of yourself.',
@@ -62,10 +62,18 @@ const OurTeamPage = () => {
         alignItems: 'center',
     };
 
+    const responsiveTeamContainer = {
+        ...teamContainerStyle,
+        padding: '20px', 
+        '@media (max-width: 600px)': { 
+            padding: '10px', 
+        },
+    };
+
     return (
-        <Container maxWidth="lg" sx={teamContainerStyle}>
+        <Container maxWidth="xl" sx={responsiveTeamContainer}> 
             <br />
-            <Typography variant="h4" gutterBottom sx={{ textAlign: 'center' }}>
+            <Typography variant="h3" color="primary" fontWeight="bold" gutterBottom sx={{ textAlign: 'center' }}>
                 Our Team
             </Typography>
             <Grid container spacing={3} sx={{ mt: 3 }}>
@@ -76,7 +84,7 @@ const OurTeamPage = () => {
                             firstName={member.firstName}
                             title={member.title}
                             description={member.description}
-                            titleStyle={titleStyle} // Pass the title inline style object to the TeamMember component
+                            titleStyle={titleStyle}
                         />
                     </Grid>
                 ))}

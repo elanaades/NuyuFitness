@@ -19,8 +19,8 @@ const JoinTheTeamPage = () => {
     };
 
     return (
-        <Container maxWidth="md" style={containerStyle}>
-            <Typography variant="h4" component="h1" style={{ ...boldStyle, ...titleStyle }}>
+        <Container maxWidth="lg" style={containerStyle}>
+            <Typography variant="h3" component="h1" style={{ ...boldStyle, ...titleStyle }}>
                 We’re Hiring!
             </Typography>
             <br />

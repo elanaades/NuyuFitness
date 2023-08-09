@@ -23,10 +23,24 @@ const MacroCalculatorPage = () => {
     const [weightPounds, setWeightPounds] = useState('');
     const [lbmPounds, setLbmPounds] = useState('');
     const [showResults, setShowResults] = useState(false);
+    const [isCalculateDisabled, setIsCalculateDisabled] = useState(true);
 
     const handleCalculate = () => {
-        setShowResults(true);
+        // Check if numbers are valid numbers
+        const numericFields = [age, heightInches, weightPounds, lbmPounds];
+        const invalidFields = numericFields.some(field => !field || isNaN(field));
+
+        // Check if all fields are filled out
+        const requiredFields = [age, sex, activityLevel, heightInches, weightPounds, lbmPounds, goal];
+        const incompleteFields = requiredFields.some(field => field === '');
+
+        // Enable the button only if all conditions are met
+        //setIsCalculateDisabled(invalidFields || incompleteFields);
+
+        // Only show results if everything is valid and filled
+        setShowResults(!invalidFields && !incompleteFields);
     };
+
 
     const resetForm = () => {
         setAge('');
@@ -35,6 +49,7 @@ const MacroCalculatorPage = () => {
         setHeightInches('');
         setWeightPounds('');
         setLbmPounds('');
+        setGoal('');
         setShowResults(false);
     };
 
@@ -215,6 +230,7 @@ const MacroCalculatorPage = () => {
                                                 color="primary"
                                                 fullWidth
                                                 onClick={handleCalculate}
+                                                //disabled={isCalculateDisabled}
                                             >
                                                 Calculate
                                             </Button>

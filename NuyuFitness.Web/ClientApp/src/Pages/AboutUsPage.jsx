@@ -1,5 +1,5 @@
 ﻿import React from 'react';
-import { Typography, Container, useTheme, Card, CardContent } from '@mui/material';
+import { Typography, Container, useTheme, Box } from '@mui/material';
 
 const AboutPage = () => {
     const theme = useTheme();
@@ -17,13 +17,14 @@ const AboutPage = () => {
         color: primaryColor,
         marginTop: '16px',
         marginBottom: '32px',
+        fontWeight:'bold'
     };
 
     return (
         <Container maxWidth="lg" style={containerStyle}>
-            <Card>
-                <CardContent>
-                    <Typography variant="h4" component="h1" style={titleStyle}>
+            <Box>
+                <Container>
+                    <Typography variant="h3" component="h1" style={titleStyle}>
                         About nuYu
                     </Typography>
                     <Typography variant="body1" style={paragraphStyle}>
@@ -38,8 +39,8 @@ const AboutPage = () => {
                     <Typography variant="body1" style={paragraphStyle}>
                         Whether you're looking to improve your overall health, increase your energy levels, or reach a specific fitness goal, nuYu Fitness is here to help. Contact us today to learn more about our services and how we can help you achieve your best self.
                     </Typography>
-                </CardContent>
-            </Card>
+                </Container>
+            </Box>
         </Container>
     );
 };

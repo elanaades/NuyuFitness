@@ -1,4 +1,4 @@
-﻿import React from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import {
     AppBar,
     Toolbar,
@@ -25,12 +25,12 @@ import {
 import { Link } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
 import nuYuLogo from '../assets/nuYuLogo.png';
 import { useAuth } from '../components/UserAuth';
-import { useEffect, useState } from 'react';
 
 const Layout = ({ children }) => {
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true); //not working properly. Do I need? If user data takes a while to fetch...
     const { user } = useAuth();
     const isLoggedIn = !!user;
 
@@ -70,7 +70,7 @@ const Layout = ({ children }) => {
     const isMobileScreen = useMediaQuery(theme.breakpoints.down('md'));
 
     useEffect(() => {
-        if (user !== null) {
+        if (user) {
             setIsLoading(false);
         }
     }, [user]);
@@ -202,7 +202,7 @@ const Layout = ({ children }) => {
                                     sx={{ textTransform: 'none' }}
                                     ref={resourcesMenuRef}
                                 >
-                                    Resources {isLoggedIn ? null : <LockOutlinedIcon fontSize="small" />}
+                                    {isLoggedIn ? <LockOpenOutlinedIcon fontSize="smaller" /> : <LockOutlinedIcon fontSize="smaller" />} Resources
                                 </Button>
                                 <Popper
                                     open={resourcesMenuOpen}
@@ -260,24 +260,21 @@ const Layout = ({ children }) => {
                                         </Grow>
                                     )}
                                 </Popper>
-                                {!isLoading && (
-                                    <>
-                                        {isLoggedIn && (
-                                            <Button component={Link} to="/logout" color="inherit" sx={{ textTransform: 'none' }}>
-                                                Logout
-                                            </Button>
-                                        )}
-                                        {!isLoggedIn && (
-                                            <Button component={Link} to="/signup" color="inherit" sx={{ textTransform: 'none' }}>
-                                                Signup
-                                            </Button>
-                                        )}
-                                        {!isLoggedIn && (
-                                            <Button component={Link} to="/login" color="inherit" sx={{ textTransform: 'none' }}>
-                                                Login
-                                            </Button>
-                                        )}
-                                    </>
+
+                                {isLoggedIn && (
+                                    <Button component={Link} to="/logout" color="inherit" sx={{ textTransform: 'none' }}>
+                                        Logout
+                                    </Button>
+                                )}
+                                {!isLoggedIn && (
+                                    <Button component={Link} to="/signup" color="inherit" sx={{ textTransform: 'none' }}>
+                                        Signup
+                                    </Button>
+                                )}
+                                {!isLoggedIn && (
+                                    <Button component={Link} to="/login" color="inherit" sx={{ textTransform: 'none' }}>
+                                        Login
+                                    </Button>
                                 )}
                             </Box>
                         )}
@@ -306,9 +303,61 @@ const Layout = ({ children }) => {
                     <ListItem button component={Link} to="/our-team" onClick={closeDrawer}>
                         <ListItemText primary="Our Team" />
                     </ListItem>
-                    <ListItem button component={Link} to="/services-pricing" onClick={closeDrawer}>
+                    <ListItem button onClick={handleSubmenuOpen}>
                         <ListItemText primary="Services & Pricing" />
                     </ListItem>
+                    <Collapse in={submenuOpen} timeout="auto" unmountOnExit>
+                        <List component="div" disablePadding>
+                            <ListItem
+                                button
+                                component={Link}
+                                to="/services-pricing"
+                                onClick={() => {
+                                    closeDrawer();
+                                    handleSubmenuClose();
+                                }}
+                                sx={{ paddingLeft: '32px' }}
+                            >
+                                <ListItemText primary="Services & Pricing" />
+                            </ListItem>
+                            <ListItem
+                                button
+                                component={Link}
+                                to="/new-client-options"
+                                onClick={() => {
+                                    closeDrawer();
+                                    handleSubmenuClose();
+                                }}
+                                sx={{ paddingLeft: '32px' }}
+                            >
+                                <ListItemText primary="New Client Options" />
+                            </ListItem>
+                            <ListItem
+                                button
+                                component={Link}
+                                to="/nuyouth-training"
+                                onClick={() => {
+                                    closeDrawer();
+                                    handleSubmenuClose();
+                                }}
+                                sx={{ paddingLeft: '32px' }}
+                            >
+                                <ListItemText primary="nuYouth Training" />
+                            </ListItem>
+                            <ListItem
+                                button
+                                component={Link}
+                                to="/rental-space"
+                                onClick={() => {
+                                    closeDrawer();
+                                    handleSubmenuClose();
+                                }}
+                                sx={{ paddingLeft: '32px' }}
+                            >
+                                <ListItemText primary="Trainer Rental Space" />
+                            </ListItem>
+                        </List>
+                    </Collapse>
                     <ListItem button component={Link} to="/schedule" onClick={closeDrawer}>
                         <ListItemText primary="Class Schedule" />
                     </ListItem>
@@ -328,12 +377,11 @@ const Layout = ({ children }) => {
                     <ListItem
                         button
                         onClick={() => {
-                            setMobileOpen(!mobileOpen);
                             handleResourcesMenuOpen();
                         }}
                     >
+                        {isLoggedIn ? <LockOpenOutlinedIcon fontSize="smaller" /> : <LockOutlinedIcon fontSize="smaller" />}
                         <ListItemText primary="Resources" />
-                        {isLoggedIn ? null : <LockOutlinedIcon fontSize="small" />}
                     </ListItem>
                     <Collapse in={resourcesMenuOpen} timeout="auto" unmountOnExit>
                         <List component="div" disablePadding>
@@ -365,6 +413,7 @@ const Layout = ({ children }) => {
                     )}
                 </List>
             </Drawer>
+
             {/* Content */}
             {children}
             <footer style={{ backgroundColor: '#f5f5f5', padding: '20px', textAlign: 'center', marginTop: 'auto' }}>

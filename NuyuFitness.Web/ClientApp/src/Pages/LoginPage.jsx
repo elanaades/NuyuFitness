@@ -1,7 +1,7 @@
 ﻿import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Container, Typography, TextField, Button, Box } from '@mui/material';
-import axios from 'axios'
+import getAxios from '../components/AuthAxios'
 import { useAuth } from '../components/UserAuth';
 
 const Login = () => {
@@ -17,14 +17,19 @@ const Login = () => {
     }
 
     const onFormSubmit = async e => {
-        e.preventDefault();
-        const { data } = await axios.post('/api/account/login', formData);
-        const { token } = data;
-        localStorage.setItem('auth-token', token);
-        setIsValidLogin(true);
-        const { data: user } = await axios.get('/api/account/getcurrentuser');
-        setUser(user);
-        navigate('/');
+        try {
+            e.preventDefault();
+            const { data } = await getAxios().post('/api/account/login', formData);
+            const { token } = data;
+            localStorage.setItem('auth-token', token);
+            setIsValidLogin(true);
+            const { data: user } = await getAxios().get('/api/account/getcurrentuser');
+            setUser(user);
+            navigate('/');
+        }
+        catch (e) {
+            setIsValidLogin(false);
+        }
     }
 
     return (
@@ -33,11 +38,7 @@ const Login = () => {
                 <Typography variant="h5" gutterBottom>
                     Log in to your account
                 </Typography>
-                {!isValidLogin && (
-                    <Typography variant="body2" color="error">
-                        Invalid username/password. Please try again.
-                    </Typography>
-                )}
+                {!isValidLogin && <Typography variant="body2" color="error">Invalid username/password. Please try again.</Typography>}
                 <form onSubmit={onFormSubmit}>
                     <TextField
                         onChange={onTextChange}

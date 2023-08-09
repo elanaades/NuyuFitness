@@ -1,13 +1,16 @@
 ﻿import React from 'react';
-import { Button, Container, Typography, Box } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Box, Container } from '@mui/material';
+import nuYouthFlyer from '../assets/nuYouthFlyer.png';
 
-const NuyouthTrainingPage = () => {
+const nuYouthTrainingPage = () => {
     return (
-        <div className="container mt-5">
-            <h1 style={{ marginTop: '100px', display: "flex", alignItems: "center" }}>NUYOUTH TRAINING PAGE</h1>
-        </div>
+        <Box py={4} textAlign="center">
+            <Container maxWidth="md">
+                <img src={nuYouthFlyer} alt="nuYouthFlyer" style={{ width: '100%', height: 'auto' }} />
+            </Container>
+        </Box>
     );
-}
+};
 
-export default NuyouthTrainingPage;
+export default nuYouthTrainingPage;
+
